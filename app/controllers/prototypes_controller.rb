@@ -23,7 +23,7 @@ class PrototypesController < ApplicationController
     @prototype = Prototype.create(prototype_params)
     
     if @prototype.save
-      redirect_to root_path(@prototype.show)
+      redirect_to root_path
     else
       @prototype = Prototype.new(prototype_params)
       render :new
