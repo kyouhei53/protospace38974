@@ -1,6 +1,6 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :move_to_index, except: [:index, :show, :new, :create, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :destroy]
+  before_action :move_to_index, only: :edit
 
 
   def index
@@ -25,6 +25,7 @@ class PrototypesController < ApplicationController
     if @prototype.save
       redirect_to root_path(@prototype.show)
     else
+      @prototype = Prototype.new(prototype_params)
       render :new
   end
 end
@@ -56,7 +57,7 @@ end
   end
 
   def move_to_index
-    unless current_user
+    unless prototype.user
       redirect_to action: :index
     end
   end
